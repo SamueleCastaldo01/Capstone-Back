@@ -57,6 +57,28 @@ public class CorsoController {
         }
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('USER')")  // Il permesso per aggiornare il corso
+    @ResponseStatus(HttpStatus.OK)
+    public Corso updateCorso(@PathVariable long id,
+                             @RequestBody @Validated CorsoDTO body,
+                             BindingResult validationResult,
+                             @AuthenticationPrincipal Utente currentAuthenticatedUser) {
+        // Verifica se ci sono errori di validazione nel body della richiesta
+        if (validationResult.hasErrors()) {
+            String message = validationResult.getAllErrors().stream()
+                    .map(objectError -> objectError.getDefaultMessage())
+                    .collect(Collectors.joining(". "));
+            throw new BadRequestException("Ci sono stati errori nel payload! " + message);
+        }
+
+        try {
+            return this.corsoService.findByIdAndUpdate(id, body, currentAuthenticatedUser);
+        } catch (Exception e) {
+            throw new BadRequestException("Errore durante l'aggiornamento del corso: " + e.getMessage());
+        }
+    }
+
     //l' eliminazione deve avvenire solamente per un organizzatore
     //con lo stesso id utente di chi lo ha creato
     @DeleteMapping("/{id}")

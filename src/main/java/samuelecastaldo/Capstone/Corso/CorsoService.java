@@ -51,6 +51,16 @@ public class CorsoService {
         }
     }
 
+    //POST --------------------------------------------
+    public Corso findByIdAndUpdate(long id, CorsoDTO body, Utente utente) {
+        Corso found = findById(id);
+        if (found.getUtente().getId() != utente.getId()) {
+            throw new BadRequestException("Non hai i permessi per eliminare questa fattura");
+        }
+        found.setNomeCorso(body.nomeCorso());
+        return this.corsoRepository.save(found);
+    }
+
     //PUT --------------------------------------------
 
     //DELETE --------------------------------------------
@@ -64,7 +74,7 @@ public class CorsoService {
         } catch (BadRequestException e) {
             throw e; // Rilancia l'eccezione BadRequestException
         } catch (Exception e) {
-            throw new BadRequestException("Errore durante l'eliminazione della fattura: " + e.getMessage());
+            throw new BadRequestException("Errore durante l'eliminazione del corso: " + e.getMessage());
         }
     }
 
