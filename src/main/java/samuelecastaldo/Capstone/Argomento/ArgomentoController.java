@@ -1,4 +1,4 @@
-package samuelecastaldo.Capstone.Corso;
+package samuelecastaldo.Capstone.Argomento;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,14 +8,17 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import samuelecastaldo.Capstone.Corso.Corso;
+import samuelecastaldo.Capstone.Corso.CorsoController;
+import samuelecastaldo.Capstone.Corso.CorsoDTO;
 import samuelecastaldo.Capstone.entities.Utente;
 import samuelecastaldo.Capstone.exceptions.BadRequestException;
 
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/corso")
-public class CorsoController {
+@RequestMapping("/argomento")
+public class ArgomentoController {
 
     public static class ResourceNotFoundException extends RuntimeException {
         public ResourceNotFoundException(String message) {
@@ -23,27 +26,28 @@ public class CorsoController {
         }
     }
 
-
     @Autowired
-    CorsoService corsoService;
+    ArgomentoService argomentoService;
 
+    //----------------------------------------------
     @GetMapping
     @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
-    public Page<Corso> findAll(
+    public Page<Argomento> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy) {
         try {
-            return this.corsoService.findAll(page, size, sortBy);
+            return this.argomentoService.findAll(page, size, sortBy);
         } catch (Exception e) {
             throw new BadRequestException("Errore durante il recupero del corso: " + e.getMessage());
         }
     }
 
+    //----------------------------------------------
     @PostMapping
     @PreAuthorize("hasAuthority('USER')")
     @ResponseStatus(HttpStatus.CREATED)
-    public Corso save(@RequestBody @Validated CorsoDTO body, BindingResult validationResult, @AuthenticationPrincipal Utente currentAuthenticatedUser) {
+    public Argomento save(@RequestBody @Validated ArgomentoDTO body, BindingResult validationResult, @AuthenticationPrincipal Utente currentAuthenticatedUser) {
         if (validationResult.hasErrors()) {
             String message = validationResult.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage())
                     .collect(Collectors.joining(". "));
@@ -51,17 +55,18 @@ public class CorsoController {
         }
 
         try {
-            return this.corsoService.save(body, currentAuthenticatedUser);
+            return this.argomentoService.save(body, currentAuthenticatedUser);
         } catch (Exception e) {
             throw new BadRequestException("Errore durante il salvataggio del corso: " + e.getMessage());
         }
     }
 
+    //----------------------------------------------
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('USER')")  // Il permesso per aggiornare il corso
     @ResponseStatus(HttpStatus.OK)
-    public Corso updateCorso(@PathVariable long id,
-                             @RequestBody @Validated CorsoDTO body,
+    public Argomento updateCorso(@PathVariable long id,
+                             @RequestBody @Validated ArgomentoDTO body,
                              BindingResult validationResult,
                              @AuthenticationPrincipal Utente currentAuthenticatedUser) {
         // Verifica se ci sono errori di validazione nel body della richiesta
@@ -73,7 +78,7 @@ public class CorsoController {
         }
 
         try {
-            return this.corsoService.findByIdAndUpdate(id, body, currentAuthenticatedUser);
+            return this.argomentoService.findByIdAndUpdate(id, body, currentAuthenticatedUser);
         } catch (Exception e) {
             throw new BadRequestException("Errore durante l'aggiornamento del corso: " + e.getMessage());
         }
@@ -85,13 +90,9 @@ public class CorsoController {
     @PreAuthorize("hasAuthority('USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdAndDelete(@PathVariable long id, @AuthenticationPrincipal Utente currentAuthenticatedUser) {
-        try {
-            this.corsoService.findByIdAndDelete(id, currentAuthenticatedUser);
-        } catch (ResourceNotFoundException e) {
-            throw new ResourceNotFoundException("Corso con id " + id + " non trovata.");
-        } catch (Exception e) {
-            throw new BadRequestException("Errore durante l'eliminazione della fattura: " + e.getMessage());
-        }
+            this.argomentoService.findByIdAndDelete(id, currentAuthenticatedUser);
+
     }
+
 
 }

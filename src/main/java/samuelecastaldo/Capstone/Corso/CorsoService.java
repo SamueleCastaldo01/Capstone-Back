@@ -28,7 +28,7 @@ public class CorsoService {
 
     public Corso findById(long id) {
         try {
-            return this.corsoRepository.findById(id).orElseThrow(() -> new NotFoundException("Corso con id " + id + " non trovata"));
+            return this.corsoRepository.findById(id).orElseThrow(() -> new NotFoundException("Corso con id " + id + " non trovato"));
         } catch (NotFoundException e) {
             throw e; // Rilancia l'eccezione NotFoundException
         } catch (Exception e) {
