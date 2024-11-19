@@ -8,12 +8,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import samuelecastaldo.Capstone.Corso.Corso;
-import samuelecastaldo.Capstone.Corso.CorsoController;
-import samuelecastaldo.Capstone.Corso.CorsoDTO;
 import samuelecastaldo.Capstone.entities.Utente;
 import samuelecastaldo.Capstone.exceptions.BadRequestException;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -41,6 +39,25 @@ public class ArgomentoController {
         } catch (Exception e) {
             throw new BadRequestException("Errore durante il recupero del corso: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    public Argomento getArgomentoById(@PathVariable long id) {
+        return argomentoService.findById(id);
+    }
+
+    @GetMapping("/corso/{id}")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    public List<Argomento> getArgomentiByCorsoId(@PathVariable long id) {
+        return argomentoService.findByCorsoId(id);
+    }
+
+    //Extra
+    // /Me endpoints----------------------------------------------------------------
+    @GetMapping("/me")
+    public List<Argomento> getMyArgomenti(@AuthenticationPrincipal Utente currentAuthenticatedUser) {
+        return argomentoService.findByUtente(currentAuthenticatedUser);
     }
 
     //----------------------------------------------

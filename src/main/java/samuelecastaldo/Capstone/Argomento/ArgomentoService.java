@@ -1,11 +1,13 @@
 package samuelecastaldo.Capstone.Argomento;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import samuelecastaldo.Capstone.Argomento.Argomento;
 import samuelecastaldo.Capstone.Argomento.ArgomentoDTO;
 import samuelecastaldo.Capstone.Corso.Corso;
@@ -13,6 +15,8 @@ import samuelecastaldo.Capstone.Corso.CorsoService;
 import samuelecastaldo.Capstone.entities.Utente;
 import samuelecastaldo.Capstone.exceptions.BadRequestException;
 import samuelecastaldo.Capstone.exceptions.NotFoundException;
+
+import java.util.List;
 
 @Service
 public class ArgomentoService {
@@ -32,6 +36,14 @@ public class ArgomentoService {
         }
     }
 
+    //------------------------------------------------------------------------
+    @Transactional
+    public List<Argomento> findByUtente(Utente utente) {
+        return argomentoRepository.findByUtenteId(utente.getId());  // Utilizza la query personalizzata
+    }
+
+    //------------------------------------------------------------------------
+
     public Argomento findById(long id) {
         try {
             return this.argomentoRepository.findById(id).orElseThrow(() -> new NotFoundException("Argomento con id " + id + " non trovata"));
@@ -40,6 +52,11 @@ public class ArgomentoService {
         } catch (Exception e) {
             throw new BadRequestException("Errore durante il recupero della fattura: " + e.getMessage());
         }
+    }
+
+    @Transactional
+    public List<Argomento> findByCorsoId(long id) {
+        return argomentoRepository.findByCorsoId(id);
     }
 
     //POST --------------------------------------------

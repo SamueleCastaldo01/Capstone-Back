@@ -1,5 +1,6 @@
 package samuelecastaldo.Capstone.Argomento;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import samuelecastaldo.Capstone.Corso.Corso;
 import samuelecastaldo.Capstone.entities.Utente;
@@ -15,6 +16,7 @@ public class Argomento {
     @JoinColumn(name = "id_corso")
     private Corso corso;
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "TEXT")
     private String contenuto;
     @ManyToOne
