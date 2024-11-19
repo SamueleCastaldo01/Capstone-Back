@@ -10,6 +10,8 @@ import samuelecastaldo.Capstone.entities.Utente;
 import samuelecastaldo.Capstone.exceptions.BadRequestException;
 import samuelecastaldo.Capstone.exceptions.NotFoundException;
 
+import java.util.List;
+
 @Service
 public class CorsoService {
 
@@ -34,6 +36,10 @@ public class CorsoService {
         } catch (Exception e) {
             throw new BadRequestException("Errore durante il recupero della fattura: " + e.getMessage());
         }
+    }
+
+    public List<Corso> findByUtente(Utente utente) {
+        return corsoRepository.findByUtente(utente);
     }
 
     //POST --------------------------------------------

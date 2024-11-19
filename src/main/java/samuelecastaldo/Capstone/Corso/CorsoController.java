@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import samuelecastaldo.Capstone.entities.Utente;
 import samuelecastaldo.Capstone.exceptions.BadRequestException;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -38,6 +39,11 @@ public class CorsoController {
         } catch (Exception e) {
             throw new BadRequestException("Errore durante il recupero del corso: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/me")
+    public List<Corso> getMyPrenotazioni(@AuthenticationPrincipal Utente currentAuthenticatedUser) {
+        return corsoService.findByUtente(currentAuthenticatedUser);
     }
 
     @PostMapping
