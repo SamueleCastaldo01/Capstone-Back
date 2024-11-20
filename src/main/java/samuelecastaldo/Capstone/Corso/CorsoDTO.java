@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 public record CorsoDTO (
         @NotEmpty(message = "Inserisi il nome del Corso")
-        String nomeCorso
+        String nomeCorso,
+        String coloreCopertina
 ) {
 }

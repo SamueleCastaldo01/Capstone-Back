@@ -13,12 +13,14 @@ public class Corso {
     @ManyToOne
     @JoinColumn(name = "id_utente")
     private Utente utente;
+    private String coloreCopertina;
 
     public Corso() {}
 
-    public Corso(Utente utente, String nomeCorso) {
+    public Corso(Utente utente, String nomeCorso, String coloreCopertina) {
         this.utente = utente;
         this.nomeCorso = nomeCorso;
+        this.coloreCopertina = coloreCopertina;
     }
 
     public long getId() {
@@ -39,6 +41,14 @@ public class Corso {
 
     public void setNomeCorso(String nomeCorso) {
         this.nomeCorso = nomeCorso;
+    }
+
+    public String getColoreCopertina() {
+        return coloreCopertina;
+    }
+
+    public void setColoreCopertina(String coloreCopertina) {
+        this.coloreCopertina = coloreCopertina;
     }
 
     @Override

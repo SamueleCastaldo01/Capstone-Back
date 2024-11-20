@@ -49,7 +49,7 @@ public class CorsoService {
                 throw new BadRequestException("Un corso con questo nome esiste già.");
             }
 
-            Corso newCorso = new Corso(utente, body.nomeCorso());
+            Corso newCorso = new Corso(utente, body.nomeCorso(), body.coloreCopertina());
             return corsoRepository.save(newCorso);
 
         } catch (Exception e) {
@@ -64,6 +64,7 @@ public class CorsoService {
             throw new BadRequestException("Non hai i permessi per eliminare questa fattura");
         }
         found.setNomeCorso(body.nomeCorso());
+        found.setColoreCopertina(body.coloreCopertina());
         return this.corsoRepository.save(found);
     }
 
