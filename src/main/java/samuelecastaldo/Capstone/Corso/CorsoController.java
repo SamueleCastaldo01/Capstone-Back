@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import samuelecastaldo.Capstone.Argomento.Argomento;
 import samuelecastaldo.Capstone.entities.Utente;
 import samuelecastaldo.Capstone.exceptions.BadRequestException;
 
@@ -44,6 +45,12 @@ public class CorsoController {
     @GetMapping("/me")
     public List<Corso> getMyPrenotazioni(@AuthenticationPrincipal Utente currentAuthenticatedUser) {
         return corsoService.findByUtente(currentAuthenticatedUser);
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    public Corso getArgomentoById(@PathVariable long id) {
+        return corsoService.findById(id);
     }
 
     @PostMapping
