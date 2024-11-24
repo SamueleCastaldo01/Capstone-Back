@@ -1,7 +1,12 @@
 package samuelecastaldo.Capstone.Corso;
 
 import jakarta.persistence.*;
+import samuelecastaldo.Capstone.Argomento.Argomento;
 import samuelecastaldo.Capstone.entities.Utente;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "corso")
@@ -14,6 +19,9 @@ public class Corso {
     @JoinColumn(name = "id_utente")
     private Utente utente;
     private String coloreCopertina;
+    private LocalDateTime dataCreazione;
+    @OneToMany(mappedBy = "corso", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Argomento> argomenti;
 
     public Corso() {}
 
@@ -21,6 +29,7 @@ public class Corso {
         this.utente = utente;
         this.nomeCorso = nomeCorso;
         this.coloreCopertina = coloreCopertina;
+        this.dataCreazione = LocalDateTime.now();
     }
 
     public long getId() {
@@ -49,6 +58,10 @@ public class Corso {
 
     public void setColoreCopertina(String coloreCopertina) {
         this.coloreCopertina = coloreCopertina;
+    }
+
+    public LocalDateTime getDataCreazione() {
+        return dataCreazione;
     }
 
     @Override

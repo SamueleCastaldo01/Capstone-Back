@@ -10,6 +10,6 @@ import java.util.List;
 public interface CorsoRepository extends JpaRepository<Corso, Long> {
     boolean existsByNomeCorso(String nomeCorso);
     List<Corso> findByUtente(Utente utente);
-
+    List<Corso> findByUtenteOrderByDataCreazione(Utente utente);
 
 }

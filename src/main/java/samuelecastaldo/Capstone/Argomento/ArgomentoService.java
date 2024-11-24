@@ -56,7 +56,7 @@ public class ArgomentoService {
 
     @Transactional
     public List<Argomento> findByCorsoId(long id) {
-        return argomentoRepository.findByCorsoId(id);
+        return argomentoRepository.findByCorsoIdOrderByDataCreazione(id);
     }
 
     //POST --------------------------------------------

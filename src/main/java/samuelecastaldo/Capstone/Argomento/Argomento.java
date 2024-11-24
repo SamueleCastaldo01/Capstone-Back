@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import samuelecastaldo.Capstone.Corso.Corso;
 import samuelecastaldo.Capstone.entities.Utente;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "argomento")
 public class Argomento {
@@ -22,6 +24,7 @@ public class Argomento {
     @ManyToOne
     @JoinColumn(name = "id_utente")
     private Utente utente;
+    private LocalDateTime dataCreazione;
 
     public Argomento() {}
 
@@ -30,6 +33,7 @@ public class Argomento {
         this.corso = corso;
         this.contenuto = contenuto;
         this.utente = utente;
+        this.dataCreazione = LocalDateTime.now();
     }
 
     public long getId() {
@@ -66,6 +70,14 @@ public class Argomento {
 
     public void setUtente(Utente utente) {
         this.utente = utente;
+    }
+
+    public LocalDateTime getDataCreazione() {
+        return dataCreazione;
+    }
+
+    public void setDataCreazione(LocalDateTime dataCreazione) {
+        this.dataCreazione = dataCreazione;
     }
 
     @Override

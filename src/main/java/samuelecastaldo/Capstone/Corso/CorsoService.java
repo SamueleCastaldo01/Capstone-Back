@@ -39,7 +39,7 @@ public class CorsoService {
     }
 
     public List<Corso> findByUtente(Utente utente) {
-        return corsoRepository.findByUtente(utente);
+        return corsoRepository.findByUtenteOrderByDataCreazione(utente);
     }
 
     //POST --------------------------------------------
@@ -57,7 +57,7 @@ public class CorsoService {
         }
     }
 
-    //POST --------------------------------------------
+    //PUT --------------------------------------------
     public Corso findByIdAndUpdate(long id, CorsoDTO body, Utente utente) {
         Corso found = findById(id);
         if (found.getUtente().getId() != utente.getId()) {
@@ -75,7 +75,7 @@ public class CorsoService {
         try {
             Corso found = this.findById(id);
             if (found.getUtente().getId() != utente.getId()) {
-                throw new BadRequestException("Non hai i permessi per eliminare questa fattura");
+                throw new BadRequestException("Non hai i permessi per eliminare appartiene ad un altro utente");
             }
             this.corsoRepository.delete(found);
         } catch (BadRequestException e) {
