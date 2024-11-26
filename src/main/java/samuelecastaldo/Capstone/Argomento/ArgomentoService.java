@@ -17,6 +17,7 @@ import samuelecastaldo.Capstone.exceptions.BadRequestException;
 import samuelecastaldo.Capstone.exceptions.NotFoundException;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ArgomentoService {
@@ -79,9 +80,12 @@ public class ArgomentoService {
     //PUT --------------------------------------------
     public Argomento findByIdAndUpdate(long id, ArgomentoDTO body, Utente utente) {
         Corso corso = corsoService.findById(body.id_corso());
+        Argomento argomento = findById(id);
 
-        if (argomentoRepository.existsByTitoloAndCorsoId(body.titolo(), corso.getId())) {
-            throw new BadRequestException("Un argomento con il titolo '" + body.titolo() + "' esiste già per il corso specificato.");
+        if(!Objects.equals(argomento.getTitolo(), body.titolo())) { //Caso particolare. In generale serve per non mettere lo stesso titolo per lo stesso corso
+            if (argomentoRepository.existsByTitoloAndCorsoId(body.titolo(), corso.getId())) {
+                throw new BadRequestException("Un argomento con il titolo '" + body.titolo() + "' esiste già per il corso specificato.");
+            }
         }
 
         Argomento found = findById(id); //trova l'argomento con lo stesso id
