@@ -64,18 +64,28 @@ public class ArgomentoService {
         try {
             Corso corso = corsoService.findById(body.id_corso());
 
+            if (argomentoRepository.existsByTitoloAndCorsoId(body.titolo(), corso.getId())) {
+                throw new BadRequestException("Un argomento con il titolo '" + body.titolo() + "' esiste già per il corso specificato.");
+            }
+
             Argomento newArgomento = new Argomento(body.titolo(), corso, body.contenuto(), utente);
             return argomentoRepository.save(newArgomento);
 
         } catch (Exception e) {
-            throw new BadRequestException("Errore durante il salvataggio del corso: " + e.getMessage());
+            throw new BadRequestException("Errore durante il salvataggio dell'argomento: " + e.getMessage());
         }
     }
 
     //PUT --------------------------------------------
     public Argomento findByIdAndUpdate(long id, ArgomentoDTO body, Utente utente) {
-        Argomento found = findById(id); //trova prima l'argomento tramite id
-        if (found.getUtente().getId() != utente.getId()) {
+        Corso corso = corsoService.findById(body.id_corso());
+
+        if (argomentoRepository.existsByTitoloAndCorsoId(body.titolo(), corso.getId())) {
+            throw new BadRequestException("Un argomento con il titolo '" + body.titolo() + "' esiste già per il corso specificato.");
+        }
+
+        Argomento found = findById(id); //trova l'argomento con lo stesso id
+        if (found.getUtente().getId() != utente.getId()) {  //per vedere se appartiene allo stesso utente
             throw new BadRequestException("Non hai i permessi per modificare questo argomento");
         }
         found.setTitolo(body.titolo());

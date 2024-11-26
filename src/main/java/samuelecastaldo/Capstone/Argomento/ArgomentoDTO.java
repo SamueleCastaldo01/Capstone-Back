@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size;
 
 public record ArgomentoDTO(
         @NotNull(message = "Il titolo è obbligatorio")
-        @Size(min = 5, max = 100, message = "Il titolo deve essere tra 5 e 100 caratteri")
+        @Size(min = 1, max = 100, message = "Il titolo deve essere tra 5 e 100 caratteri")
         String titolo,
         @NotNull(message = "L'ID del corso è obbligatorio")
         Long id_corso,

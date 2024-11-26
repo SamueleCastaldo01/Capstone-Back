@@ -15,6 +15,8 @@ import java.util.List;
 public interface ArgomentoRepository extends JpaRepository<Argomento, Long> {
     List<Argomento> findByCorsoId(long id);
     List<Argomento> findByCorsoIdOrderByDataCreazione(long id);
+    boolean existsByTitolo(String titolo);
+    boolean existsByTitoloAndCorsoId(String titolo, Long corsoId);
 
     @Query("SELECT a FROM Argomento a WHERE a.utente.id = :userId")
     List<Argomento> findByUtenteId(@Param("userId") Long userId);

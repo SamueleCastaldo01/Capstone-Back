@@ -61,7 +61,7 @@ public class DomandaService {
     public Domanda save(DomandaDTO body, Utente utente) {
         Argomento argomento = argomentoService.findById(body.id_argomento());
         try {
-            Domanda newDomanda = new Domanda(body.Domanda(), body.rispostaDomanda(), body.rispostaS2(), body.rispostaS3(), body.rispostaS4(), argomento, utente);
+            Domanda newDomanda = new Domanda(body.domanda(), body.rispostaDomanda(), body.rispostaS2(), body.rispostaS3(), body.rispostaS4(), argomento, utente);
             return domandaRepository.save(newDomanda);
         } catch (Exception e) {
             throw new BadRequestException("Errore durante il salvataggio del corso: " + e.getMessage());
@@ -75,7 +75,7 @@ public class DomandaService {
         if (found.getUtente().getId() != utente.getId()) {
             throw new BadRequestException("Non hai i permessi per eliminare appartiene ad un altro utente");
         }
-        found.setDomanda(body.Domanda());
+        found.setDomanda(body.domanda());
         found.setRispostaDomanda(body.rispostaDomanda());
         found.setRispostaS2(body.rispostaS2());
         found.setRispostas3(body.rispostaS3());

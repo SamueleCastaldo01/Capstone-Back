@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record DomandaDTO(
         @NotNull(message = "La domanda è obbligatoria")
-        String Domanda,
+        String domanda,
         @NotNull(message = "L'ID del argomento è obbligatorio")
         long id_argomento,
         @NotNull(message = "La risposta corretta è obbligatoria")
