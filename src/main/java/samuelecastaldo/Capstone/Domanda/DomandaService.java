@@ -52,6 +52,11 @@ public class DomandaService {
         return domandaRepository.findByArgomentoId(idArgomento);
     }
 
+    @Transactional
+    public List<Domanda> findByIdCorso(Long idCorso) {
+        return domandaRepository.findByIdCorso(idCorso);
+    }
+
     //POST --------------------------------------------
     public Domanda save(DomandaDTO body, Utente utente) {
         Argomento argomento = argomentoService.findById(body.id_argomento());

@@ -18,6 +18,7 @@ public class Domanda {
     @ManyToOne
     @JoinColumn(name = "id_argomento")
     private Argomento argomento;
+    private long idCorso;
 
     @ManyToOne
     @JoinColumn(name = "id_utente")
@@ -33,6 +34,7 @@ public class Domanda {
         this.rispostas4 = rispostas4;
         this.argomento = argomento;
         this.utente = utente;
+        this.idCorso = argomento.getCorso().getId();
     }
 
     public Utente getUtente() {
@@ -93,6 +95,14 @@ public class Domanda {
 
     public void setArgomento(Argomento argomento) {
         this.argomento = argomento;
+    }
+
+    public long getIdCorso() {
+        return idCorso;
+    }
+
+    public void setIdCorso(long idCorso) {
+        this.idCorso = idCorso;
     }
 
     @Override

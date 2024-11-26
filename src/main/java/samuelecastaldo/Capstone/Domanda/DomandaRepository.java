@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface DomandaRepository extends JpaRepository<Domanda, Long> {
     List<Domanda> findByArgomentoId(Long argomentoId);
+    List<Domanda> findByIdCorso(Long idCorso);
 }

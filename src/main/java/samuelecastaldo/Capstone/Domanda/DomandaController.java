@@ -8,7 +8,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import samuelecastaldo.Capstone.Argomento.Argomento;
 import samuelecastaldo.Capstone.entities.Utente;
 import samuelecastaldo.Capstone.exceptions.BadRequestException;
 
@@ -50,8 +49,14 @@ public class DomandaController {
 
     @GetMapping("/argomento/{id}")
     @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
-    public List<Domanda> getArgomentiByCorsoId(@PathVariable long id) {
+    public List<Domanda> getArgomentiByArgomentoId(@PathVariable long id) {
         return domandaService.findByIdArgomento(id);
+    }
+
+    @GetMapping("/corso/{id}")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    public List<Domanda> getArgomentiByCorsoId(@PathVariable long id) {
+        return domandaService.findByIdCorso(id);
     }
 
     @PostMapping
