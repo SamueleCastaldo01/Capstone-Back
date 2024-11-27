@@ -15,6 +15,7 @@ import samuelecastaldo.Capstone.entities.Utente;
 import samuelecastaldo.Capstone.exceptions.BadRequestException;
 import samuelecastaldo.Capstone.exceptions.NotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -61,7 +62,7 @@ public class DomandaService {
     public Domanda save(DomandaDTO body, Utente utente) {
         Argomento argomento = argomentoService.findById(body.id_argomento());
         try {
-            Domanda newDomanda = new Domanda(body.domanda(), body.rispostaDomanda(), body.rispostaS2(), body.rispostaS3(), body.rispostaS4(), argomento, utente);
+            Domanda newDomanda = new Domanda(body.domanda(), body.rispostaDomanda(), body.rispostaS2(), body.rispostaS3(), body.rispostaS4(), argomento, utente, body.difficolta());
             return domandaRepository.save(newDomanda);
         } catch (Exception e) {
             throw new BadRequestException("Errore durante il salvataggio del corso: " + e.getMessage());
@@ -80,6 +81,26 @@ public class DomandaService {
         found.setRispostaS2(body.rispostaS2());
         found.setRispostas3(body.rispostaS3());
         found.setRispostas4(body.rispostaS4());
+
+        //qui vado a gestire le flashCard
+        if(body.difficolta() != null) {
+            //va a modificare la data di Modifica Difficoltà
+            found.setDataModificaDifficolta(LocalDateTime.now());
+            if(body.difficolta() == "ripeti") {
+                found.setDifficolta("ripeti");
+                found.setRitardo(1);
+            } else if (body.difficolta() == "difficile") {
+                found.setDifficolta("difficile");
+                found.setRitardo(5);
+            } else if (body.difficolta() == "normale") {
+                found.setDifficolta("normale");
+                found.setRitardo(15);
+            } else if (body.difficolta() == "facile") {
+                found.setDifficolta("facile");
+                found.setRitardo(60);
+            }
+        }
+
 
         return this.domandaRepository.save(found);
     }

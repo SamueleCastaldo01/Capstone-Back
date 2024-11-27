@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import samuelecastaldo.Capstone.Argomento.Argomento;
 import samuelecastaldo.Capstone.entities.Utente;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "domanda")
 public class Domanda {
@@ -23,10 +25,13 @@ public class Domanda {
     @ManyToOne
     @JoinColumn(name = "id_utente")
     private Utente utente;
+    private  String difficolta;
+    private LocalDateTime dataModificaDifficolta;
+    private long ritardo;   //qui lo facciamo valere in minuti
 
     public Domanda() {}
 
-    public Domanda(String domanda, String rispostaDomanda, String rispostaS2, String rispostas3, String rispostas4, Argomento argomento, Utente utente) {
+    public Domanda(String domanda, String rispostaDomanda, String rispostaS2, String rispostas3, String rispostas4, Argomento argomento, Utente utente, String difficolta) {
         this.domanda = domanda;
         this.rispostaDomanda = rispostaDomanda;
         this.rispostaS2 = rispostaS2;
@@ -35,6 +40,8 @@ public class Domanda {
         this.argomento = argomento;
         this.utente = utente;
         this.idCorso = argomento.getCorso().getId();
+        this.difficolta = difficolta;
+        this.dataModificaDifficolta = LocalDateTime.now();
     }
 
     public Utente getUtente() {
@@ -99,6 +106,30 @@ public class Domanda {
 
     public long getIdCorso() {
         return idCorso;
+    }
+
+    public long getRitardo() {
+        return ritardo;
+    }
+
+    public void setRitardo(long ritardo) {
+        this.ritardo = ritardo;
+    }
+
+    public LocalDateTime getDataModificaDifficolta() {
+        return dataModificaDifficolta;
+    }
+
+    public void setDataModificaDifficolta(LocalDateTime dataModificaDifficolta) {
+        this.dataModificaDifficolta = dataModificaDifficolta;
+    }
+
+    public String getDifficolta() {
+        return difficolta;
+    }
+
+    public void setDifficolta(String difficolta) {
+        this.difficolta = difficolta;
     }
 
     public void setIdCorso(long idCorso) {

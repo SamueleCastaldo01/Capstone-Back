@@ -11,6 +11,7 @@ public record DomandaDTO(
         String rispostaDomanda,
         String rispostaS2,
         String rispostaS3,
-        String rispostaS4
+        String rispostaS4,
+        String difficolta
 ) {
 }
