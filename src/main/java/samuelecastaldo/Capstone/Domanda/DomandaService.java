@@ -86,16 +86,16 @@ public class DomandaService {
         if(body.difficolta() != null) {
             //va a modificare la data di Modifica Difficoltà
             found.setDataModificaDifficolta(LocalDateTime.now());
-            if(body.difficolta() == "ripeti") {
+            if(body.difficolta().equals("ripeti")) {
                 found.setDifficolta("ripeti");
                 found.setRitardo(1);
-            } else if (body.difficolta() == "difficile") {
+            } else if (body.difficolta().equals("difficile")) {
                 found.setDifficolta("difficile");
                 found.setRitardo(5);
-            } else if (body.difficolta() == "normale") {
+            } else if (body.difficolta().equals("normale")) {
                 found.setDifficolta("normale");
                 found.setRitardo(15);
-            } else if (body.difficolta() == "facile") {
+            } else if (body.difficolta().equals("facile")) {
                 found.setDifficolta("facile");
                 found.setRitardo(60);
             }
