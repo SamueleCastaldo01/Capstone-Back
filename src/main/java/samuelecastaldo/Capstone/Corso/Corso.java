@@ -2,6 +2,7 @@ package samuelecastaldo.Capstone.Corso;
 
 import jakarta.persistence.*;
 import samuelecastaldo.Capstone.Argomento.Argomento;
+import samuelecastaldo.Capstone.Domanda.Domanda;
 import samuelecastaldo.Capstone.entities.Utente;
 
 import java.time.LocalDate;
@@ -22,6 +23,8 @@ public class Corso {
     private LocalDateTime dataCreazione;
     @OneToMany(mappedBy = "corso", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Argomento> argomenti;
+    @OneToMany(mappedBy = "corso", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Domanda> domande;  // Relazione con Domanda
 
     public Corso() {}
 

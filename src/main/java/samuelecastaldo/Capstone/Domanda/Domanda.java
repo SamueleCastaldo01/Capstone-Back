@@ -1,6 +1,7 @@
 package samuelecastaldo.Capstone.Domanda;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 import samuelecastaldo.Capstone.Argomento.Argomento;
 import samuelecastaldo.Capstone.entities.Utente;
 
