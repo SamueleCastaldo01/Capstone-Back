@@ -23,8 +23,6 @@ public class Corso {
     private LocalDateTime dataCreazione;
     @OneToMany(mappedBy = "corso", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Argomento> argomenti;
-    @OneToMany(mappedBy = "corso", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Domanda> domande;  // Relazione con Domanda
 
     public Corso() {}
 

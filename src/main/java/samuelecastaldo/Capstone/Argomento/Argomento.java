@@ -3,9 +3,11 @@ package samuelecastaldo.Capstone.Argomento;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import samuelecastaldo.Capstone.Corso.Corso;
+import samuelecastaldo.Capstone.Domanda.Domanda;
 import samuelecastaldo.Capstone.entities.Utente;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "argomento")
@@ -25,6 +27,8 @@ public class Argomento {
     @JoinColumn(name = "id_utente")
     private Utente utente;
     private LocalDateTime dataCreazione;
+    @OneToMany(mappedBy = "argomento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Domanda> domande;
 
     public Argomento() {}
 
