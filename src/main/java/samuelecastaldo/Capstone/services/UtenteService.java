@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import samuelecastaldo.Capstone.entities.Utente;
 import samuelecastaldo.Capstone.exceptions.BadRequestException;
 import samuelecastaldo.Capstone.exceptions.NotFoundException;
+import samuelecastaldo.Capstone.payloads.EditUtenteDTO;
 import samuelecastaldo.Capstone.payloads.NewUtenteDTO;
 import samuelecastaldo.Capstone.repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,8 @@ public class UtenteService {
         return this.utenteRepository.save(utente);
     }
 
-    public Utente findByIdAndUpdate(long id, NewUtenteDTO body) {
+
+    public Utente findByIdAndUpdate(long id, EditUtenteDTO body) {
         Utente found = this.findById(id);
 
         if (!found.getEmail().equals(body.email())) {
@@ -67,13 +69,15 @@ public class UtenteService {
                     }
             );
         }
-        found.setUsername(body.username());
+
         found.setNome(body.nome());
         found.setCognome(body.cognome());
         found.setEmail(body.email());
 
         return this.utenteRepository.save(found);
     }
+
+
 
     public void findByIdAndDelete(long id) {
         Utente found = this.findById(id);

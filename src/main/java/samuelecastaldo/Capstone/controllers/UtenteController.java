@@ -2,6 +2,7 @@ package samuelecastaldo.Capstone.controllers;
 
 import samuelecastaldo.Capstone.entities.Utente;
 import samuelecastaldo.Capstone.exceptions.BadRequestException;
+import samuelecastaldo.Capstone.payloads.EditUtenteDTO;
 import samuelecastaldo.Capstone.payloads.NewUtenteDTO;
 import samuelecastaldo.Capstone.services.FileUploadService;
 import samuelecastaldo.Capstone.services.UtenteService;
@@ -41,7 +42,7 @@ public class UtenteController {
     }
 
     @PutMapping("/me")
-    public Utente updateProfile(@AuthenticationPrincipal Utente currentAuthenticatedUser, @RequestBody @Validated NewUtenteDTO body) {
+    public Utente updateProfile(@AuthenticationPrincipal Utente currentAuthenticatedUser, @RequestBody @Validated EditUtenteDTO body) {
         return this.utenteService.findByIdAndUpdate(currentAuthenticatedUser.getId(), body);
     }
 
@@ -89,8 +90,8 @@ public class UtenteController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public Utente findByIdAndUpdate(@PathVariable long id, @RequestBody @Validated NewUtenteDTO body, BindingResult validationResult) {
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    public Utente findByIdAndUpdate(@PathVariable long id, @RequestBody @Validated EditUtenteDTO body, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
             validationResult.getAllErrors().forEach(System.out::println);
             throw new BadRequestException("Ci sono stati errori nel payload!");
