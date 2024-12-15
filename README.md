@@ -30,4 +30,22 @@ Il backend di **Veyro** gestisce le seguenti funzionalità principali:
    - Gestione della difficoltà delle domande.
    - Visualizzazione e test delle flashcards in base alla difficoltà selezionata.
 
-## Struttura del Progetto
+## Link al Frontend
+
+Il **frontend** dell'applicazione è sviluppato con **React.js** ed è disponibile su GitHub. Puoi consultare il repository del frontend al seguente link:
+
+[Frontend di Veyro - React.js](https://github.com/SamueleCastaldo01/Capstone-Front)
+
+## Documentazione Completa
+
+Per una documentazione più dettagliata, consulta la documentazione completa del progetto. Essa include informazioni su come configurare, eseguire e testare l'applicazione completa (backend + frontend):
+
+[Documentazione Completa](https://github.com/SamueleCastaldo01/Capstone-Front)
+
+## Come Iniziare
+
+### 1. Clonare il Repository
+
+```bash
+git clone https://github.com/tuo-username/veyro-backend.git
+cd veyro-backend
